@@ -487,12 +487,24 @@ bool Item::LoadFromDB(uint32 guidLow, ObjectGuid ownerGuid, Field* fields, uint3
     uint32 durability = fields[8].GetUInt16();
     SetUInt32Value(ITEM_FIELD_DURABILITY, durability);
     // update max durability (and durability) if need
-    SetUInt32Value(ITEM_FIELD_MAXDURABILITY, proto->MaxDurability);
+
+	// DFTY2: Remove item durability start
+	// Original
+    /*SetUInt32Value(ITEM_FIELD_MAXDURABILITY, proto->MaxDurability);
     if (durability > proto->MaxDurability)
     {
         SetUInt32Value(ITEM_FIELD_DURABILITY, proto->MaxDurability);
         need_save = true;
-    }
+    }*/
+
+	// New
+	SetUInt32Value(ITEM_FIELD_MAXDURABILITY, 0);
+	if (durability > proto->MaxDurability)
+	{
+		SetUInt32Value(ITEM_FIELD_DURABILITY, 0);
+		need_save = true;
+	}
+	// DFT2: Remove item durability end
 
     SetUInt32Value(ITEM_FIELD_ITEM_TEXT_ID, fields[9].GetUInt32());
 
