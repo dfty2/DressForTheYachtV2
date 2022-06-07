@@ -2198,7 +2198,9 @@ static void RewardGroupAtKill_helper(Player* pGroupGuy, Unit* pVictim, uint32 co
         // XP updated only for alive group member
         if (pGroupGuy->IsAlive() && not_gray_member_with_max_level)
         {
-            uint32 itr_xp = (member_with_max_level == not_gray_member_with_max_level) ? uint32(xp * rate) : uint32((xp * rate / 2) + 1);
+			// DFTY2: No XP diminishing with grouping
+            uint32 itr_xp = xp;
+            //uint32 itr_xp = (member_with_max_level == not_gray_member_with_max_level) ? uint32(xp * rate) : uint32((xp * rate / 2) + 1);
             if (pGroupGuy->GetLevel() <= not_gray_member_with_max_level->GetLevel())
                 pGroupGuy->GiveXP(itr_xp, pVictim);
             if (Pet* pet = pGroupGuy->GetPet())
