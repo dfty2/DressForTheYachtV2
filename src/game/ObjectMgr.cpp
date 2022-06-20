@@ -3389,6 +3389,13 @@ void ObjectMgr::LoadItemPrototypes()
             const_cast<ItemPrototype*>(proto)->Class = ITEM_CLASS_JUNK;
         }
 
+		// DFTY2: Enforce item level
+		if (proto->InventoryType != INVTYPE_NON_EQUIP && proto->ItemLevel > 5 && proto->RequiredLevel == 0)
+		{
+			int newRequiredLevel = std::min((int)proto->ItemLevel - 5, 60);
+			const_cast<ItemPrototype*>(proto)->RequiredLevel = newRequiredLevel;
+		}
+
         if (proto->SubClass >= MaxItemSubclassValues[proto->Class])
         {
             sLog.outErrorDb("Item (Entry: %u) has wrong Subclass value (%u) for class %u", i, proto->SubClass, proto->Class);
