@@ -3564,6 +3564,12 @@ void ObjectMgr::LoadItemPrototypes()
         if (proto->Bonding >= MAX_BIND_TYPE)
             sLog.outErrorDb("Item (Entry: %u) has wrong Bonding value (%u)", i, proto->Bonding);
 
+		// DFTY2: Removing binding
+		if (proto->Bonding != NO_BIND)
+		{
+			const_cast<ItemPrototype*>(proto)->Bonding = NO_BIND;
+		}
+
         if (proto->PageText)
         {
             if (!sPageTextStore.LookupEntry<PageText>(proto->PageText))
