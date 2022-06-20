@@ -120,6 +120,16 @@ void LootStore::LoadLootTable()
             uint32 maxcount            = fields[5].GetUInt32();
             uint16 conditionId         = fields[6].GetUInt16();
 
+			// DFTY2: Reduce recipe and tradeskill drop rate
+			ItemPrototype const* pProto = ObjectMgr::GetItemPrototype(item);
+			if (pProto != NULL)
+			{
+				if (pProto->Class == ItemClass::ITEM_CLASS_RECIPE || pProto->Class == ItemClass::ITEM_CLASS_TRADE_GOODS)
+				{
+					chanceOrQuestChance /= 8;
+				}
+			}
+
             if (maxcount > std::numeric_limits<uint8>::max())
             {
                 sLog.outErrorDb("Table '%s' entry %d item %d: maxcount value (%u) to large. must be less %u - skipped", GetName(), entry, item, maxcount, std::numeric_limits<uint8>::max());
