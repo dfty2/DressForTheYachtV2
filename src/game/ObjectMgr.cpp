@@ -4920,6 +4920,24 @@ void ObjectMgr::LoadQuests()
             }
         }
 
+		// DFTY2: Cut all quest requirements > 4 in half
+		for (int j = 0; j < QUEST_ITEM_OBJECTIVES_COUNT; ++j)
+		{
+			if (qinfo->ReqItemCount[j] > 4)
+			{
+				qinfo->ReqItemCount[j] /= 2;
+			}
+		}
+
+		for (int j = 0; j < QUEST_OBJECTIVES_COUNT; ++j)
+		{
+			if (qinfo->ReqCreatureOrGOCount[j] > 4)
+			{
+				qinfo->ReqCreatureOrGOCount[j] /= 2;
+			}
+		}
+		// DFTY2: End
+
         // RequiredRaces, can be 0/RACEMASK_ALL_PLAYABLE to allow any race
         if (qinfo->RequiredRaces)
         {
